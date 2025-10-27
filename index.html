@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Pribadi</title>
+    <style>
+        /* Reset dan gaya dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: lightgray;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header dan Navigasi */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #394f64;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Halaman */
+        .page {
+            display: none;
+            padding: 3rem 0;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Halaman Utama */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background-color: #394f64;
+            color: whitesmoke;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid ;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Halaman Tentang Saya */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .about-text {
+            padding-right: 1rem;
+        }
+        
+        .skills {
+            margin-top: 2rem;
+        }
+        
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+        
+        .skill-name {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .skill-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .skill-level {
+            height: 100%;
+            background-color: #3498db;
+        }
+        
+        /* Halaman Portofolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .portfolio-item {
+            background-color: beige;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .portfolio-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+        
+        .portfolio-info h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Halaman Kontak */
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #5d85a0;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #709ab6;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #394f64;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #2c3e50;
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header dan Navigasi -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">UTS Portofolio</div>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link" data-page="home">Beranda</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">Tentang Saya</a></li>
+                    <li><a href="#" class="nav-link" data-page="portfolio">Portofolio</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Kontak</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span>☰</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Halaman Utama -->
+    <section id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <img src="image/Profil.png" alt="Foto Profil" class="profile-img">
+                <h1>Rifky Fauzan</h1>
+                <p>Seorang Mahasiswa Fakultas Sains Jurusan Sistem Teknologi Informasi Universitas Darunnajah Jakarta yang kebingungan bagaimana cara membuat website, tetapi yakin bahwa bisa itu karena biasa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Halaman Tentang Saya -->
+    <section id="about" class="page">
+        <div class="container">
+            <h2>Tentang Saya</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Latar Belakang</h3>
+                    <p>Seorang mahasiswa ingin membuat website portofolio untuk menampilkan karya-karya dan informasi tentang dirinya. Website ini harus mencakup beberapa halaman dengan elemen-elemen dasar yang umum ditemukan pada website pribadi, seperti informasi diri, galeri foto, dan kontak.</p>
+                    
+                    <h3>Pendidikan</h3>
+                    <ul>
+                        <li>Universitas Darunnajah Jakarta - Sistem Teknologi Informasi (2024 - Sekarang)</li>
+                        <li>Pondok Pesantren Baitul Hidayah Bandung (2019 - 2024)</li>
+                        <li>SMP Negeri 47 Bandung (2017-2019)</li>
+                        <li>SD Negeri 156 Pasirkaliki Bandung (2012-2017)</li>
+                    </ul>
+                    
+                    <h3>Pengalaman Kerja</h3>
+                    <ul>
+                        <li>Pengurus Pokja Kab.Bandung Bidang Kesantrian (2025-Sekarang)</li>
+                        <li>Pengurus Emis Santri Pondok Pesantren Baitul Hidayah Bandung (2024-Sekarang)</li>
+                        <li>Penerimaan Tamu Pondok Pesantren Baitul Hidayah (2022-2024)</li>
+                        <li>Pengurus Asrama Gontor PPBH santri kelas 2 (2023)</li>
+                        <li>Pengurus OSIS SMP Negeri 47 Bandung (2018-2019)</li>
+                    </ul>
+                </div>
+                
+                <div class="skills">
+                    <h3>Keterampilan</h3>
+                    <div class="skill-item">
+                        <span class="skill-name">Berenang</span>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Mengetik</span>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Ternak</span>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Konten Kreator</span>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Membaca</span>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 55%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Halaman Portfolio -->
+    <section id="portfolio" class="page">
+        <div class="container">
+            <h2>Portfolio</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="image/Server Wifi.jpg" alt="Proyek 1" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Server Wifi Pesantren</h3>
+                        <p>Mengatur wifi setiap ruangan pondok Pesantren dengan rapi dan teratur. Amanah ini saya dapatkan pertengahan tahun 2025</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image/Banner Sambangan.jpg" alt="Proyek 2" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Banner Sambangan Wali Santri</h3>
+                        <p>Banner ini dibuat ketika saya kelas 6 KMI di Pondok Pesantren Baitul Hidayah Bandung akhir tahun 2023.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image/SmartBook.png" alt="Proyek 3" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>SmartBook Acara</h3>
+                        <p>SmartBook ini saya buat ketika menjadi sekretaris acara Panyandaan Olympiad dan Pagelaran Pentas Seni Akbar 2023.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image/Ngajar.jpg" alt="Proyek 4" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Mengajar di Pesantren</h3>
+                        <p>Ini foto ketika saya mengajar di Pondok Pesantren Baitul Hidayah Bandung tahun 2024 sampai sekarang.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image/Kelinci.jpg" alt="Proyek 5" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Ternak Kelinci Hias Rex</h3>
+                        <p>Awalnya hobi sih pelihara kelinci, tapi kepikiran juga ingin coba untuk ternak kelinci kecil-kecilan. Yaa bisa dibilang kerjaan sampingan lah.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image/Ternak Iguana.jpg" alt="Proyek 6" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3>Ternak Iguana</h3>
+                        <p>Saya juga termasuk pencinta reptile yang awalnya hobi sampai kepikiran untuk ternak kecil-kecilan juga. Ini foto Iguana-iguananya.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Halaman Kontak -->
+    <section id="contact" class="page">
+        <div class="container">
+            <h2>Kontak</h2>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subjek</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Kirim Pesan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Rifky Fauzan STI 3B Darunnajah University</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigasi antar halaman
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Sembunyikan semua halaman
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Tampilkan halaman yang dipilih
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+                
+                // Tutup menu hamburger jika terbuka
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+        
+        // Menu hamburger untuk perangkat mobile
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Form kontak
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Pesan Anda telah berhasil dikirim! Terima kasih telah menghubungi saya.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
